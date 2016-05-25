@@ -80,7 +80,7 @@ public class MenuAdapter extends BaseExpandableListAdapter{
         TextView parent_textview = (TextView) convertView.findViewById(R.id.parent_txt);
         parent_textview.setTypeface(null, Typeface.BOLD);
         parent_textview.setText(group_title);
-        if (Color_List.size()==3) {
+        if (Color_List.size()>=3) {
             parent_textview.setTextColor(Color.rgb(Color_List.get(0), Color_List.get(1), Color_List.get(2)));
         }
         ImageView img_selection=(ImageView) convertView.findViewById(R.id.imageView);

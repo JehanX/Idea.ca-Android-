@@ -8,12 +8,15 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -57,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     Vector<Integer> Color_List = new Vector<>();
     ExpandableListView Exp_list;
     MenuAdapter adapter;
+    int test=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
                 if (Exp_list.getVisibility() == View.VISIBLE) {
                     Exp_list.setVisibility(View.GONE);
                 }
+
                 return false;
             }
         });
@@ -183,35 +188,43 @@ public class MainActivity extends AppCompatActivity {
         //Detect the loading process
         webView.setWebViewClient(new WebViewClient() {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                webView.setVisibility(View.GONE);
+
+
             }
-            public void onPageFinished(WebView view, String url) {
-                for (String selector: CSS.keySet()) {
-                    String declaration = CSS.get(selector);
-                    //Overwrite CSS
-                    view.loadUrl("javascript:(function() {var elementList = document.querySelectorAll('"+selector+"');" +
-                            "var ListLen = document.querySelectorAll('"+selector+"').length;"+
-                            "for (var i=0; i<ListLen; i++) {" +
-                            "var prestyle = elementList[i].getAttribute('style');"+
-                            "elementList[i].style.cssText = prestyle+'"+declaration+"';}})()");
-                }
+
+            public void onPageFinished(final WebView view, String url) {
+//                for (final String selector: CSS.keySet()) {
+//                    final String declaration = CSS.get(selector);
+//                    //Overwrite CSS
+//
+//                    webView.loadUrl("javascript:(function() {var elementList = document.querySelectorAll('"+selector+"');" +
+//                            "var ListLen = document.querySelectorAll('"+selector+"').length;"+
+//                            "for (var i=0; i<ListLen; i++) {" +
+//                            "var prestyle = elementList[i].getAttribute('style');"+
+//                            "elementList[i].style.cssText = prestyle+'"+declaration+"';}})()");
+//
+//
+//                    //webView.setVisibility(View.VISIBLE);
+//                }
+
                 //Delay loading time, wait for css
-                Timer timer;
-                timer = new Timer();
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
+//                Timer timer;
+//                timer = new Timer();
+//                timer.schedule(new TimerTask() {
+//                    @Override
+//                    public void run() {
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//
+//                                webView.setVisibility(View.VISIBLE);
+//
+//                            }
+//                        });
+//
+//                    }
+//                },800);
 
-                                webView.setVisibility(View.VISIBLE);
-
-                            }
-                        });
-
-                    }
-                },1000);
 
             };
         });
