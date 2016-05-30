@@ -50,7 +50,7 @@ public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
     //The last three integers represent rgb of the secondary color of this site.
     Vector<Integer> Color_List = new Vector<>();
     //Set your json string url here. The only thing you need to change is json URL. Everything will be changed according to Json file.
-    String JsonURL = "http://www.jehanxue.ca/idea/en/index2.json";
+    String JsonURL = "http://www.jehanxue.ca/idea/en/idea.json";
 
     //Actions before doInBackgroud
     @Override
@@ -79,7 +79,7 @@ public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
 
             JSONArray Menu_JsonArr = null;
             //Detect if json file has a key named "Menu"
-            if (json.has("Menu")==true) {
+            if (json.has("Menu")) {
                 Menu_JsonArr = json.getJSONArray("Menu");
             }
             else {
@@ -139,7 +139,7 @@ public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
             }
 
             //Set color
-            if (json.has("Color")==true) {
+            if (json.has("Color")) {
                 JSONArray Colors = json.getJSONArray("Color");
                 for(int i = 0; i < Colors.length(); i++) {
                     JSONObject AColor = Colors.getJSONObject(i);
@@ -151,7 +151,7 @@ public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
             }
 
             //Set buttons
-            if (json.has("Buttons")==true) {
+            if (json.has("Buttons")) {
                 JSONArray ButtonsJsonArr = json.getJSONArray("Buttons");
                 for (int i=0; i<ButtonsJsonArr.length();i++) {
                     JSONObject ButtonJsonObj = ButtonsJsonArr.getJSONObject(i);
@@ -189,7 +189,7 @@ public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
             }
 
             //Set CSS
-            if (json.has("CSS")==true) {
+            if (json.has("CSS")) {
                 JSONArray CSSJsonArr = json.getJSONArray("CSS");
                 for (int i=0; i<CSSJsonArr.length();i++) {
                     JSONObject CSSJsonObj = CSSJsonArr.getJSONObject(i);

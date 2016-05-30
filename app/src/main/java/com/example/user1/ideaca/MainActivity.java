@@ -312,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
         Exp_list.collapseGroup(lastExpandedPosition);
     }
 
-    //Hand buttons' function
+    //Handle buttons' functionality
     public void Menu_ButtonClicked(View v) {
         if (success==false || isConnected==false) {
             return;
@@ -339,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Get the function name of the button is clicked
         String button_func ="";
-        //Default
+        //No customized buttons, use default
         if (!Buttons_Info.containsKey("button"+button_num) || Buttons_Info.get("button"+button_num).get("button_func").equals("") ) {
             switch (button_num) {
                 case 1:
@@ -364,7 +364,7 @@ public class MainActivity extends AppCompatActivity {
             button_func = Buttons_Info.get("button"+button_num).get("button_func");
         }
 
-        //Set function
+        //Set functionality
         switch (button_func) {
             case "Back":
                 if (Exp_list.getVisibility() == View.VISIBLE) {
@@ -418,6 +418,17 @@ public class MainActivity extends AppCompatActivity {
                 }
                 webView.loadUrl(Buttons_Info.get("button"+button_num).get("button_url"));
                 break;
+            case "Modal":
+                if (Exp_list.getVisibility() == View.VISIBLE) {
+                    Exp_list.setVisibility(View.GONE);
+                }
+                String modalId = Buttons_Info.get("button"+button_num).get("button_url");
+                webView.loadUrl("javascript:(function(){" +
+                        "l=document.getElementById('"+modalId+"');"+
+                        "e=document.createEvent('HTMLEvents');" +
+                        "e.initEvent('click',true,true);" +
+                        "l.dispatchEvent(e);" +
+                        "})()");
         }
     }
 }
