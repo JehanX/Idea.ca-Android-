@@ -49,7 +49,7 @@ public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
     //The last three integers represent rgb of the secondary color of this site.
     Vector<Integer> Color_List = new Vector<>();
     //Set your json string url here. The only thing you need to change is json URL. Everything will be changed according to Json file.
-    String JsonURL = "http://www.jehanxue.ca/idea/en/index.json";
+    String JsonURL = "http://www.jehanxue.ca/idea/en/idea.json";
 
     //Actions before doInBackgroud
     @Override

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.user1.ideaca.MainActivity">
+    tools:context="com.example.user1.a10dollar.MainActivity">
 
     <WebView
         android:id="@+id/webView"
@@ -49,7 +49,7 @@
             android:drawableTop="@drawable/back_button"
             android:text="Back"
             android:background="@drawable/button_style"
-            android:onClick="Menu_ButtonClicked"/>
+            android:onClick="ButtonClicked"/>
 
         <Button
             android:id="@+id/button2"
@@ -62,7 +62,7 @@
             android:drawableTop="@drawable/phone_button"
             android:text="Phone"
             android:background="@drawable/button_style"
-            android:onClick="Menu_ButtonClicked"/>
+            android:onClick="ButtonClicked"/>
         <Button
             android:id="@+id/button3"
             android:layout_width="0dp"
@@ -75,7 +75,7 @@
             android:text="Phone"
             android:background="@drawable/button_style"
             android:visibility="gone"
-            android:onClick="Menu_ButtonClicked"/>
+            android:onClick="ButtonClicked"/>
         <Button
             android:id="@+id/button2_4"
             android:layout_width="0dp"
@@ -87,7 +87,7 @@
             android:drawableTop="@drawable/home_button"
             android:text="Home"
             android:background="@drawable/button_style2"
-            android:onClick="Menu_ButtonClicked"/>
+            android:onClick="ButtonClicked"/>
         <Button
             android:id="@+id/button4"
             android:layout_width="0dp"
@@ -99,7 +99,7 @@
             android:drawableTop="@drawable/email_button"
             android:text="Email"
             android:background="@drawable/button_style"
-            android:onClick="Menu_ButtonClicked"/>
+            android:onClick="ButtonClicked"/>
         <Button
             android:id="@+id/button5"
             android:layout_width="0dp"
@@ -111,17 +111,9 @@
             android:drawableTop="@drawable/menu_button"
             android:text="Menu"
             android:background="@drawable/button_style"
-            android:onClick="Menu_ButtonClicked"/>
+            android:onClick="ButtonClicked"/>
 
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView2"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="280dp"
@@ -129,8 +121,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Please check your Internet."
         android:id="@+id/displaymessage"
-        android:layout_above="@+id/imageView2"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="68dp"
+        android:layout_marginTop="150dp"
         android:visibility="gone"/>
 </RelativeLayout>
