@@ -22,7 +22,6 @@ import java.util.Vector;
 /**
  * Created by user1 on 5/5/2016.
  */
-
 //Get all information from Json
 public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
     //Indicate if we get all information from json successfully.
@@ -30,9 +29,9 @@ public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
     //URL of the home page
     String Home_URL;
     //Phone number of company
-    String Phone_Number;
+    String Phone_Number = "";
     //Email address of company
-    String Contact_Email;
+    String Contact_Email = "";
     //Kye: Name of menu. Value: List of names of submenu belongs to key
     LinkedHashMap<String, List<String>> Menu_List = new LinkedHashMap<>();
     //Key: Name of menu. Value: linkedhashmap [key: (id, url, submenu) value: the values according to keys]
@@ -50,7 +49,7 @@ public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
     //The last three integers represent rgb of the secondary color of this site.
     Vector<Integer> Color_List = new Vector<>();
     //Set your json string url here. The only thing you need to change is json URL. Everything will be changed according to Json file.
-    String JsonURL = "http://www.jehanxue.ca/idea/en/idea.json";
+    String JsonURL = "http://www.jehanxue.ca/idea/en/index.json";
 
     //Actions before doInBackgroud
     @Override
@@ -71,71 +70,74 @@ public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
             }
 
             //Set URL of the home page
-            Home_URL = json.getString("homeURL");
+            if (json.has("homeURL")) {
+                Home_URL = json.getString("homeURL");
+            }
             //Set phone number
-            Phone_Number = json.getString("contactPhone");
+            if (json.has("contactPhone")) {
+                Phone_Number = json.getString("contactPhone");
+            }
             //Set contact Emial
-            Contact_Email = json.getString("contactEmail");
+            if (json.has("contactEmail")) {
+                Contact_Email = json.getString("contactEmail");
+            }
 
             JSONArray Menu_JsonArr = null;
             //Detect if json file has a key named "Menu"
             if (json.has("Menu")) {
                 Menu_JsonArr = json.getJSONArray("Menu");
-            }
-            else {
-                return null;
-            }
 
-            //Loop through all Menu and Submenu
-            for (int i = 0; i < Menu_JsonArr.length(); i++) {
+                //Loop through all Menu and Submenu
+                for (int i = 0; i < Menu_JsonArr.length(); i++) {
 
-                JSONObject Menu_Name = Menu_JsonArr.getJSONObject(i);
+                    JSONObject Menu_Name = Menu_JsonArr.getJSONObject(i);
 
-                //Used to save information of every single menu.
-                LinkedHashMap<String, String> menu_info = new LinkedHashMap<>();
+                    //Used to save information of every single menu.
+                    LinkedHashMap<String, String> menu_info = new LinkedHashMap<>();
 
-                //Get menu's attribute
-                String name = Menu_Name.getString("name");
-                String id = Menu_Name.getString("id");
-                String url = Menu_Name.getString("url");
-                String submenu = Menu_Name.getString("submenu");
+                    //Get menu's attribute
+                    String name = Menu_Name.getString("name");
+                    String id = Menu_Name.getString("id");
+                    String url = Menu_Name.getString("url");
+                    String submenu = Menu_Name.getString("submenu");
 
-                //Put menu's attribute into menu_info
-                menu_info.put("id", id);
-                menu_info.put("url", url);
-                menu_info.put("submenu", submenu);
+                    //Put menu's attribute into menu_info
+                    menu_info.put("id", id);
+                    menu_info.put("url", url);
+                    menu_info.put("submenu", submenu);
 
-                //Put menu_info into Menu_Info
-                Menu_Info.put(name,menu_info);
+                    //Put menu_info into Menu_Info
+                    Menu_Info.put(name, menu_info);
 
-                //Used to store all the names of submenu which under the same menu
-                List<String> SubMenu_List = new ArrayList<String>();
-                //Only menu with submenu attribute is Yes has submenu
-                if (submenu.equals("Yes")) {
-                    JSONArray SubMenu_JsonArr = json.getJSONArray(name);
-                    for (int j=0; j<SubMenu_JsonArr.length(); j++) {
-                        JSONObject SubMenu_Object = SubMenu_JsonArr.getJSONObject(j);
+                    //Used to store all the names of submenu which under the same menu
+                    List<String> SubMenu_List = new ArrayList<String>();
+                    //Only menu with submenu attribute is Yes has submenu
+                    if (submenu.equals("Yes")) {
+                        JSONArray SubMenu_JsonArr = json.getJSONArray(name);
+                        for (int j = 0; j < SubMenu_JsonArr.length(); j++) {
+                            JSONObject SubMenu_Object = SubMenu_JsonArr.getJSONObject(j);
 
-                        //Get submenu's attribute
-                        String submenu_name = SubMenu_Object.getString("name");
-                        String submenu_url = SubMenu_Object.getString("url");
+                            //Get submenu's attribute
+                            String submenu_name = SubMenu_Object.getString("name");
+                            String submenu_url = SubMenu_Object.getString("url");
 
-                        //Used to save information of every single submenu.
-                        LinkedHashMap<String, String> submenu_info = new LinkedHashMap<>();
+                            //Used to save information of every single submenu.
+                            LinkedHashMap<String, String> submenu_info = new LinkedHashMap<>();
 
-                        //Put submenu's attribute into menu_info
-                        submenu_info.put("name",submenu_name);
-                        submenu_info.put("url",submenu_url);
+                            //Put submenu's attribute into menu_info
+                            submenu_info.put("name", submenu_name);
+                            submenu_info.put("url", submenu_url);
 
-                        //Put submenu_info into SubMenu_Info
-                        SubMenu_Info.put(name+"-"+submenu_name,submenu_info);
+                            //Put submenu_info into SubMenu_Info
+                            SubMenu_Info.put(name + "-" + submenu_name, submenu_info);
 
-                        //Put name of submenu into SubMenu_List
-                        SubMenu_List.add(submenu_name);
+                            //Put name of submenu into SubMenu_List
+                            SubMenu_List.add(submenu_name);
+                        }
                     }
+                    //Put all the names of submenu into Menu_List according to name fo menu
+                    Menu_List.put(name, SubMenu_List);
                 }
-                //Put all the names of submenu into Menu_List according to name fo menu
-                Menu_List.put(name,SubMenu_List);
             }
 
             //Set color
@@ -228,4 +230,5 @@ public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
         }
     }
 }
+
 

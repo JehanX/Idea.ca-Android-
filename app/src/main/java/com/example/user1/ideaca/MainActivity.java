@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private String Phone_Number;
     private String Contact_Email;
     LinkedHashMap<String, List<String>> Menu_List = new LinkedHashMap<String, List<String>>();
-    List<String> SubMenu_List;
+    List<String> MenuName_List;
     LinkedHashMap<String, LinkedHashMap<String, String>> Menu_Info = new LinkedHashMap<>();
     LinkedHashMap<String, LinkedHashMap<String, String>> SubMenu_Info = new LinkedHashMap<>();
     LinkedHashMap<String, LinkedHashMap<String, String>> Buttons_Info = new LinkedHashMap<>();
@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         TextView displayMessage = (TextView) findViewById(R.id.displaymessage);
         //Check if there is Internet connection
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -181,17 +180,16 @@ public class MainActivity extends AppCompatActivity {
                     Exp_list.setVisibility(View.GONE);
                 }
 
+                Exp_list.collapseGroup(lastExpandedPosition);
+
+
+
                 return false;
             }
         });
 
         //Detect the loading process
         webView.setWebViewClient(new WebViewClient() {
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-
-
-            }
-
             public void onPageFinished(final WebView view, String url) {
 //                for (final String selector: CSS.keySet()) {
 //                    final String declaration = CSS.get(selector);
@@ -231,9 +229,16 @@ public class MainActivity extends AppCompatActivity {
 
         //Set ExpandableListView adapter
         Exp_list = (ExpandableListView) findViewById(R.id.expandableListView);
-        SubMenu_List = new ArrayList<String>(Menu_List.keySet());
-        adapter = new MenuAdapter(this, Menu_List, SubMenu_List, Color_List);
+        MenuName_List = new ArrayList<String>(Menu_List.keySet());
+        adapter = new MenuAdapter(this, Menu_List, MenuName_List, Color_List);
         Exp_list.setAdapter(adapter);
+
+        //Get the screen height
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        final int height = displaymetrics.heightPixels;
+        //Set menu height
+        setListViewHeight(height);
 
         //Handle collapsing submenu
         Exp_list.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
@@ -243,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
                     Exp_list.collapseGroup(lastExpandedPosition);
                 }
                 lastExpandedPosition = groupPosition;
+
             }
         });
 
@@ -260,12 +266,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Get the screen height
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int height = displaymetrics.heightPixels;
-        //Set menu height
-        setListViewHeight(height);
+
     }
 
     //Set menu height
@@ -313,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Handle buttons' functionality
-    public void Menu_ButtonClicked(View v) {
+    public void ButtonClicked(View v) {
         if (success==false || isConnected==false) {
             return;
         }
@@ -379,6 +380,9 @@ public class MainActivity extends AppCompatActivity {
                     Exp_list.setVisibility(View.GONE);
                 }
                 Intent myintent = new Intent(Intent.ACTION_VIEW);
+                if (Phone_Number.equals("")) {
+                    break;
+                }
                 myintent.setData(Uri.parse("tel:"+Phone_Number));
                 startActivity(myintent);
                 break;
@@ -391,6 +395,9 @@ public class MainActivity extends AppCompatActivity {
             case "Email":
                 if (Exp_list.getVisibility() == View.VISIBLE) {
                     Exp_list.setVisibility(View.GONE);
+                }
+                if (Contact_Email.equals("")) {
+                    break;
                 }
                 String[] TO = {Contact_Email};
                 String[] CC = {""};
@@ -432,3 +439,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+
