@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private Button button1;
     private Button button2;
     private Button button3;
-    private Button button2_4;
     private Button button4;
     private Button button5;
     private boolean success;
@@ -120,8 +119,6 @@ public class MainActivity extends AppCompatActivity {
         button1 = (Button) findViewById(R.id.button1);
         button2 = (Button) findViewById(R.id.button2);
         button3 = (Button) findViewById(R.id.button3);
-        //button2_4 is default home button, different style only shows up when button_len equals 0
-        button2_4 = (Button) findViewById(R.id.button2_4);
         button4 = (Button) findViewById(R.id.button4);
         button5 = (Button) findViewById(R.id.button5);
         Button_List.add(button1);
@@ -134,8 +131,6 @@ public class MainActivity extends AppCompatActivity {
         //Check if client define buttons. If button_len equals to 0 means client doesn't define any
         //buttons and we use default button's icon, text and function. There are 5 buttons in default.
         if (button_len!=0) {
-            button3.setVisibility(View.VISIBLE);
-            button2_4.setVisibility(View.GONE);
 
             //loop 5 buttons
             for (int i=0; i<5; i++) {
@@ -160,17 +155,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
-        //Default home button, function is go back to home page
-        button2_4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Exp_list.getVisibility() == View.VISIBLE) {
-                    Exp_list.setVisibility(View.GONE);
-                }
-                webView.loadUrl(Home_URL);
-            }
-        });
 
         //The situation that if the webview is touched
         webView.setOnTouchListener(new View.OnTouchListener() {

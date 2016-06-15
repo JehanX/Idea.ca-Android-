@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.user1.a10dollar.MainActivity">
+    tools:context="com.example.user1.ideaca.MainActivity">
 
     <WebView
         android:id="@+id/webView"
@@ -71,22 +71,9 @@
             android:layout_marginTop="6dp"
             android:paddingTop="6dp"
             android:paddingBottom="5dp"
-            android:drawableTop="@drawable/phone_button"
-            android:text="Phone"
-            android:background="@drawable/button_style"
-            android:visibility="gone"
-            android:onClick="ButtonClicked"/>
-        <Button
-            android:id="@+id/button2_4"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="fill_parent"
-            android:layout_marginTop="0dp"
-            android:paddingTop="6dp"
-            android:paddingBottom="5dp"
             android:drawableTop="@drawable/home_button"
             android:text="Home"
-            android:background="@drawable/button_style2"
+            android:background="@drawable/button_style"
             android:onClick="ButtonClicked"/>
         <Button
             android:id="@+id/button4"
