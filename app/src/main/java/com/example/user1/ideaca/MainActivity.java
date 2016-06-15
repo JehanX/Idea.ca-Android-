@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
         Button_List.add(button4);
         Button_List.add(button5);
 
+        
         int button_len = Buttons_Info.size();
         //Check if client define buttons. If button_len equals to 0 means client doesn't define any
         //buttons and we use default button's icon, text and function. There are 5 buttons in default.
