@@ -1,4 +1,4 @@
-package com.example.user1.ideaca;
+package ca.idea.user1.ideaca;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,15 +8,14 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.webkit.JavascriptInterface;
-import android.webkit.ValueCallback;
+import android.webkit.CookieManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -24,11 +23,12 @@ import android.widget.ExpandableListView;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.idea.user1.ideaca.R;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.Vector;
 import java.util.concurrent.ExecutionException;
 
@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             displayMessage.setVisibility(View.VISIBLE);
             return;
         }
+
         //Execute AsyncTaskParseJson
         AsyncTaskParseJson Async = new AsyncTaskParseJson();
         Async.execute();
@@ -127,7 +128,10 @@ public class MainActivity extends AppCompatActivity {
         Button_List.add(button4);
         Button_List.add(button5);
 
-        
+        //Share cookies between two servers
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView,true);
+        CookieManager.getInstance().setAcceptCookie(true);
+
         int button_len = Buttons_Info.size();
         //Check if client define buttons. If button_len equals to 0 means client doesn't define any
         //buttons and we use default button's icon, text and function. There are 5 buttons in default.
@@ -176,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
         //Detect the loading process
         webView.setWebViewClient(new WebViewClient() {
             public void onPageFinished(final WebView view, String url) {
+
 //                for (final String selector: CSS.keySet()) {
 //                    final String declaration = CSS.get(selector);
 //                    //Overwrite CSS
@@ -409,12 +414,14 @@ public class MainActivity extends AppCompatActivity {
                     Exp_list.setVisibility(View.GONE);
                 }
                 webView.loadUrl(Buttons_Info.get("button"+button_num).get("button_url"));
+
                 break;
             case "Modal":
                 if (Exp_list.getVisibility() == View.VISIBLE) {
                     Exp_list.setVisibility(View.GONE);
                 }
                 String modalId = Buttons_Info.get("button"+button_num).get("button_url");
+
                 webView.loadUrl("javascript:(function(){" +
                         "l=document.getElementById('"+modalId+"');"+
                         "e=document.createEvent('HTMLEvents');" +

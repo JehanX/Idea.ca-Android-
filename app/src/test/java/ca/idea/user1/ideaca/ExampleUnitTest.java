@@ -1,4 +1,4 @@
-package com.example.user1.ideaca;
+package ca.idea.user1.ideaca;
 
 import org.junit.Test;
 
